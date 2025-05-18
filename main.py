@@ -31,7 +31,7 @@ def categorizeTransaction(df):
             details = row["Description"].lower()
             if details in lowerKeywords:
                 df.at[idx,"Category"] = category
-    return categorizeTransaction(df)
+    return df
 
 def loadTransactions(file):
     try:
@@ -39,7 +39,7 @@ def loadTransactions(file):
         df.columns = [col.strip() for col in df.columns]
         df["Amount"] = df["Amount"].replace(',', '').astype(float)
         df["Date"] = pd.to_datetime(df["Date"], format='%Y-%m-%d')
-        return df
+        return categorizeTransaction(df)
     except Exception as e:
         st.error(f"Error loading file: {e}")
         return None
