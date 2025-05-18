@@ -97,6 +97,21 @@ def main():
                         st.session_state.spending.at[idx,"Category"] = newCat
                         addKeyword(newCat, details)
                 
+                st.subheader("Spending by Category")
+                categoryCounts = st.session_state.spending.groupby("Category")["Amount"].sum().reset_index()
+                categoryCounts = categoryCounts.sort_values(by="Amount", ascending=False)
+
+                st.dataframe(categoryCounts, column_config={"Amount": st.column_config.NumberColumn("Amount", format="%.2f USD")}, use_container_width=True, hide_index=True)
+
+                fig = px.pie(
+                    categoryCounts, 
+                    values='Amount', 
+                    names='Category', 
+                    title='Spending by Category')
+                st.plotly_chart(fig, use_container_width=True)
+                st.subheader("Total Spending")
+                st.write("Total Spending: ", spending["Amount"].sum())
+                
             with tab2:
                 st.write(income)
                 st.write("Total Income: ", income["Amount"].sum()) 
