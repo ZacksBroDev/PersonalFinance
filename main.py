@@ -10,7 +10,7 @@ catFile = "categories.json"
 
 if "categories" not in st.session_state:
     st.session_state.categories = {
-        "uncategorized": []
+        "Category Pending": []
     }
 if os.path.exists(catFile):
     with open (catFile, "r") as f:
@@ -21,16 +21,16 @@ def saveCategories():
         json.dump(st.session_state.categories, f)
 
 def categorizeTransaction(df):
-    df["Category"] = "Uncategorized"
+    df["Category"] = "Category Pending"
     for category, keywords in st.session_state.categories.items():
-        if category == "uncategorized" or not keywords:
+        if category == "Category Pending" or not keywords:
             continue
         
         lowerKeywords = [keyword.lower().strip() for keyword in keywords]
-        for idx, roe in df.iterrows():
-            details = roe["Details"].lower()
+        for idx, row in df.iterrows():
+            details = row["Description"].lower()
             if details in lowerKeywords:
-                df.at[idx,"category"] = category
+                df.at[idx,"Category"] = category
     return categorizeTransaction(df)
 
 def loadTransactions(file):
