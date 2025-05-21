@@ -100,7 +100,8 @@ def main():
                 st.subheader("Spending by Category")
                 categoryCounts = st.session_state.spending.groupby("Category")["Amount"].sum().reset_index()
                 categoryCounts = categoryCounts.sort_values(by="Amount", ascending=False)
-
+                categoryCounts["Amount"] = categoryCounts["Amount"].abs()
+                
                 st.dataframe(categoryCounts, column_config={"Amount": st.column_config.NumberColumn("Amount", format="%.2f USD")}, use_container_width=True, hide_index=True)
 
                 fig = px.pie(
@@ -108,11 +109,13 @@ def main():
                     values='Amount', 
                     names='Category', 
                     title='Spending by Category')
+                
                 st.plotly_chart(fig, use_container_width=True)
                 st.subheader("Total Spending")
                 st.write("Total Spending: ", spending["Amount"].sum())
                 
             with tab2:
-                st.write(income)
-                st.write("Total Income: ", income["Amount"].sum()) 
+                st.subheader("your income")
+                payment = income["Amount"].sum()
+                st.metric("Payments", f"{payment:.2f} USD")
 main()
