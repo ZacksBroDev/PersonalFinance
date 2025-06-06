@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+<<<<<<< HEAD
 import matplotlib.pyplot as plt
+=======
+>>>>>>> 40bc387709f92c1677db3db6808f1cb54c586335
 import json
 import os
 
@@ -114,6 +117,7 @@ def main():
                 st.plotly_chart(fig, use_container_width=True)
                 st.subheader("Total Spending")
                 st.write("Total Spending: ", spending["Amount"].sum())
+<<<<<<< HEAD
                 st.subheader("Total Income")
                 st.write("Total Income: ", income["Amount"].sum())
 
@@ -123,6 +127,9 @@ def main():
                 plt.ylabel('Amount (USD)')
                 st.pyplot(plot)
 
+=======
+                
+>>>>>>> 40bc387709f92c1677db3db6808f1cb54c586335
             with tab2:
                 st.subheader("your income")
                 payment = income["Amount"].sum()
