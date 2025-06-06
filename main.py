@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import matplotlib.pyplot as plt
 import json
 import os
 
@@ -113,7 +114,15 @@ def main():
                 st.plotly_chart(fig, use_container_width=True)
                 st.subheader("Total Spending")
                 st.write("Total Spending: ", spending["Amount"].sum())
-                
+                st.subheader("Total Income")
+                st.write("Total Income: ", income["Amount"].sum())
+
+                plot = plt.figure(figsize=(5, 5))
+                spending["Amount"].plot(kind='bar', title='Spending Over Time')
+                plt.xlabel('Date')
+                plt.ylabel('Amount (USD)')
+                st.pyplot(plot)
+
             with tab2:
                 st.subheader("your income")
                 payment = income["Amount"].sum()
